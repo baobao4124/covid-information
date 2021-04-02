@@ -1,10 +1,8 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
+
 // Components
 import AppHeader from 'Layouts/AppHeader';
 import AppMain from 'Layouts/AppMain';
-// import AppFooter from 'Layouts/AppFooter';
-import ThemeOptions from 'Layouts/ThemeOptions';
 
 // Styles
 import '@antscorp/components/main.css';
@@ -16,7 +14,6 @@ const Layouts = (props) => {
         <div className="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
             <AppHeader />
             <AppMain {...props} />
-            <ThemeOptions />
         </div>
     );
 };

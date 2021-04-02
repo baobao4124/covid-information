@@ -1,3 +1,7 @@
+// Library
+import moment from 'moment';
+
+// Utils
 import {handleError} from 'Src/handleError';
 
 const PATH = 'Src/utils.js';
@@ -111,4 +115,23 @@ export const random = (number) => {
             }
         });
     }
+};
+
+export const formatDateTime = (value, locale = 'en') => {
+    let formatDefault = ['YYYYMMDD hh:mm:ss', 'YYYYMMDDhhmmss', 'YYYYMMDD'];
+    let formattedValue = value;
+
+    try {
+        if (typeof value !== 'undefined') {
+            formattedValue = moment(value, ['YYYY',...formatDefault], 'en').locale(locale).format('MMM DD, YYYY');
+        }
+    } catch (e) {
+        return value;
+    }
+
+    if (formattedValue === 'Invalid date') {
+        return value;
+    }
+
+    return formattedValue;
 };

@@ -3,7 +3,9 @@ const initialState = {
         label: 'Viet nam',
         id: 'VN',
         slug: 'vietnam'
-    }
+    },
+    isLoading: false,
+    countrySummary: {}
 };
 
 export {

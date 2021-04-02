@@ -11,6 +11,7 @@
   ],
   "moduleNameMapper": {
     "^.+\\.(css|less|scss)$": "identity-obj-proxy",
+    "^Src(.*)$": "<rootDir>/src$1",
     "^Config(.*)$": "<rootDir>/config$1",
     "^Assets(.*)$": "<rootDir>/src/assets$1",
     "^Components(.*)$": "<rootDir>/src/components$1",

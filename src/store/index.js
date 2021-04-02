@@ -27,10 +27,9 @@ store = createStore(appReducer, composeEnhancers(applyMiddleware(sagaMiddleware)
 
 sagaMiddleware.run(rootSaga);
 
-const StoreContext = createContext({
-    state: initialState,
-    dispatch: () => null
-});
+/// /
+
+const StoreContext = createContext(initialState);
 
 export {
     StoreContext,

@@ -10,7 +10,7 @@
         "Assets/*": ["./src/assets/*"],
         "Services/*": ["./src/services/*"],
         "Hooks/*": ["./src/hooks/*"],
-        "Layouts/*": ["./src/Layouts/*"],
+        "Layouts/*": ["./src/Layouts/*"]
       }
     },
     "exclude": [

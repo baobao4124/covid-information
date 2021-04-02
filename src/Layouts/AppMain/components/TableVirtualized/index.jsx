@@ -15,12 +15,12 @@ const headers = [{
     label: 'Confirmed',
     width: 20
 },{
-    dataKey: 'Recovered',
-    label: 'Recovered',
-    width: 20
-},{
     dataKey: 'Deaths',
     label: 'Deaths',
+    width: 20
+},{
+    dataKey: 'Recovered',
+    label: 'Recovered',
     width: 20
 },{
     dataKey: 'Date',

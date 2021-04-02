@@ -21,7 +21,19 @@
   .app-main__search {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 30px;
+    margin-bottom: 1.5rem;
+  }
+
+  .app-main__table {
+    margin-bottom: 1.5rem;
+  }
+
+  .app-main__footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px;
   }
 }
 

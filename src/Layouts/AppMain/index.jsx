@@ -4,30 +4,42 @@ import {MessageBox} from '@antscorp/components';
 
 // Components
 import SearchDropdown from 'Components/SearchDropdown';
-// import PageTitle from 'Layouts/AppMain/components/PageTitle';
+import Loading from 'Components/Loading';
 import Summary from 'Layouts/AppMain/components/Summary';
 import TableVirtualized from 'Layouts/AppMain/components/TableVirtualized';
 
 // Actions
-import {StoreContext, StoreReducer, defaultState, types} from 'Src/store/index';
+import {StoreContext, StoreReducer, defaultState} from 'Src/store';
+import {updateSelectedCountry} from 'Src/store/actions';
 
 // Services
 import {countryServices, getDayOneByCountryServices} from 'Src/services/index';
 
 // Utils
 import useImmerReducer from 'Src/hooks/useImmerReducer';
-import {getObjectPropSafely} from 'Src/utils';
+import {getObjectPropSafely, formatDateTime} from 'Src/utils';
 import {handleError} from 'Src/handleError';
 
 const PATH = 'Layouts/AppMain';
 
 const headerStyle = {justifyContent: 'flex-start'};
 const bodyStyle = {backgroundColor: '#f8f9fa'};
+const loadingStyle = {
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+};
+const loadingIconStyle = {
+    position: 'absolute',
+    marginTop: '-60px'
+};
 
 const AppMain = () => {
     const [state, dispatch] = useImmerReducer(StoreReducer, defaultState);
 
     const [dataByCountry, setDataByCountry] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
     const [messageBox, setMessageBox] = useState({
         isOpen: false,
         content: '',
@@ -44,11 +56,8 @@ const AppMain = () => {
                     slug: param.Slug
                 };
 
-                dispatch({
-                    type: types.UPDATE_SELECTED_COUNTRY,
-                    payload: {
-                        countrySelected: formatParams
-                    }
+                updateSelectedCountry(dispatch, {
+                    countrySelected: formatParams
                 });
             }
         } catch (error) {
@@ -63,11 +72,12 @@ const AppMain = () => {
     useEffect(() => {
         try {
             if (!dataByCountry[state.countrySelected.slug]) {
+                setIsLoading(true);
                 getDayOneByCountryServices({
                     country: state.countrySelected.slug
                 }).then(response => {
                     const {data} = response;
-        
+            
                     if (getObjectPropSafely(() => data.length)) {
                         const newData = data.map((item) => {
                             return {
@@ -75,12 +85,14 @@ const AppMain = () => {
                                 Confirmed: item.Confirmed,
                                 Recovered: item.Recovered,
                                 Deaths: item.Deaths,
-                                Date: item.Date
+                                Date: formatDateTime(item.Date)
                             };
                         });
-    
+        
                         checkOverHeap(20, newData);
                     }
+
+                    setIsLoading(false);
                 }).catch(err => {
                     if (err) {
                         setMessageBox({
@@ -89,6 +101,8 @@ const AppMain = () => {
                             title: 'Error',
                             content: 'For performance reasons, please specify a province or a date range up to a week'
                         });
+    
+                        setIsLoading(false);
                     }
                 });
             }
@@ -135,10 +149,10 @@ const AppMain = () => {
             >
                 {messageBox.content}
             </MessageBox>
+            {isLoading && <Loading loading={loadingStyle} loadingIcon={loadingIconStyle} />}
             <div className="app-main">
                 <div className="app-main__outer">
                     <div className="app-main__inner">
-                        {/* <PageTitle /> */}
                         <Summary />
                         <div className="app-main__search">
                             <SearchDropdown 
@@ -162,6 +176,52 @@ const AppMain = () => {
                                 rows={dataByCountry[state.countrySelected.slug]}
                                 isShowFooter={false}
                             />
+                        </div>
+                        <div className="app-main__footer">
+                            <div className="row">
+                                <div className="col-md-6 col-xl-4">
+                                    <div className="card mb-3 widget-content">
+                                        <div className="widget-content-outer">
+                                            <div className="widget-content-wrapper">
+                                                <div className="widget-content-left">
+                                                    <div className="widget-heading">Confirmed</div>
+                                                </div>
+                                                <div className="widget-content-right">
+                                                    <div className="widget-numbers text-warning">{getObjectPropSafely(() => state.countrySummary.totalConfirmed || 0)}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-6 col-xl-4">
+                                    <div className="card mb-3 widget-content">
+                                        <div className="widget-content-outer">
+                                            <div className="widget-content-wrapper">
+                                                <div className="widget-content-left">
+                                                    <div className="widget-heading">Deaths</div>
+                                                </div>
+                                                <div className="widget-content-right">
+                                                    <div className="widget-numbers text-danger">{getObjectPropSafely(() => state.countrySummary.totalDeaths || 0)}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-6 col-xl-4">
+                                    <div className="card mb-3 widget-content">
+                                        <div className="widget-content-outer">
+                                            <div className="widget-content-wrapper">
+                                                <div className="widget-content-left">
+                                                    <div className="widget-heading">Recovered</div>
+                                                </div>
+                                                <div className="widget-content-right">
+                                                    <div className="widget-numbers text-success">{getObjectPropSafely(() => state.countrySummary.totalRecovered || 0)}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -9,6 +9,16 @@ const reducer = (state = initialState, action) => {
                 return {...state, countrySelected: action.payload.countrySelected};
             }
             return state;
+        case types.UPDATE_COUNTRY_SUMMARY:
+            if (action.payload && action.payload.countrySummary) {
+                return {...state, countrySummary: action.payload.countrySummary};
+            }
+            return state;
+        case types.UPDATE_LOADING:
+            if (action.payload) {
+                return {...state, isLoading: action.payload};
+            }
+            return state;
         default:
             return state;
     }

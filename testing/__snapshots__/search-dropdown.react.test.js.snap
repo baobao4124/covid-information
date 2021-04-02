@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="container-field d-inline-block"
+  style={Object {}}
+>
+  <div
+    className="dropdown-one-column dropdown-basic dropdown"
+    onKeyDown={[Function]}
+  >
+    <button
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="btn btn-dropdown btn-default btn-full dropdown-toggle dropdown-toggle"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Existing Project
+    </button>
+    <div
+      aria-hidden={true}
+      className="box-shadow dropdown-menu"
+      role="menu"
+      style={
+        Object {
+          "outline": "none",
+          "width": "100%",
+        }
+      }
+      tabIndex="-1"
+    >
+      <div
+        className="head"
+      >
+        <div
+          className="input-search"
+        >
+          <input
+            onChange={[Function]}
+            placeholder=""
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        className="body position-relative"
+      >
+        <div
+          className="scrollbar"
+          onScroll={[Function]}
+          style={Object {}}
+        >
+          <ul
+            className="list-item-name"
+            style={
+              Object {
+                "minHeight": "200px",
+                "width": "100%",
+              }
+            }
+          >
+            <li>
+              <span
+                className="name"
+              >
+                No data
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
