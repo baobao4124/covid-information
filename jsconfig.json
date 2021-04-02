@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+      "target": "es6",
+      "baseUrl": ".",
+      "noUnusedParameters": true,
+      "noUnusedLocals": true,
+      "paths": {
+        "Src/*": ["./src/*"],
+        "Modules/*": ["./src/modules/*"],
+        "Assets/*": ["./src/assets/*"],
+        "Services/*": ["./src/services/*"],
+        "Hooks/*": ["./src/hooks/*"],
+        "Layouts/*": ["./src/Layouts/*"],
+      }
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

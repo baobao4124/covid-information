@@ -1,0 +1,46 @@
+@import "../../assets/css/variables";
+
+//Loading
+.loading{ position: absolute; top: 0; bottom: 0; left: 0; right: 0;
+  .loading-icon{ background-image: $brand-icon5; width: 25px; height: 25px;}
+}
+
+.processing{ display: flex; align-items: center;
+  .processing-name{ margin-left: 20px;}
+}
+
+.skype-loader{ width: 60px; height: 60px; position: relative;
+  .dot{ position: absolute; top: 0; left: 0; width: 60px; height: 60px; animation: 1.7s dotrotate cubic-bezier(0.775, 0.005, 0.310, 1.000) infinite;
+    &:after, .first{ background-color: #666; border-radius: 50%; content: ""; position: absolute; width: 8px; height: 8px; left: 50%; margin-left: -4px;}
+    &:nth-child(1){ animation-delay: 0.2s;}
+    &:nth-child(2){ animation-delay: 0.35s;}
+    &:nth-child(3){ animation-delay: 0.45s;}
+    &:nth-child(4){ animation-delay: 0.55s;}
+    .first{ background-color: #666; margin-top: -4px; animation: 1.7s dotscale cubic-bezier(0.775, 0.005, 0.310, 1.000) infinite; animation-delay: 0s;}
+  }
+}
+
+@keyframes dotrotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes dotscale {
+  0%, 10% { width: 16px; height: 16px; margin-left: -8px;  margin-top: -4px; }
+  50% { width: 16px; height: 16px; margin-left: -8px; margin-top: -4px; }
+  90%, 100% { width: 16px; height: 16px;  margin-left: -8px;  margin-top: -4px; }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

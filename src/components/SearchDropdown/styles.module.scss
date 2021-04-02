@@ -1,0 +1,33 @@
+.input-search {
+  width: 100%;
+  padding: 0 5px 15px 5px;
+
+  > input {
+    width: 100%;
+    padding: 0 10px;
+    height: 35px;
+    border: 1px solid #b6bbbd;
+
+    &:focus,
+    &:hover,
+    &:active {
+      border-color: #30c7ec;
+      outline: none;
+    }
+  }
+}
+
+.item-active {
+  background-color: #e4f9ff;
+}
+
+.btn-dropdown {
+  border: 1px solid #dfe4e6;
+  height: 40px;
+
+  &:focus,
+  &:hover,
+  &:active {
+    border-color: #30c7ec;
+  }
+}

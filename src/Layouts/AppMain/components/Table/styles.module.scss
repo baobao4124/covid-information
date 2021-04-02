@@ -1,0 +1,55 @@
+.grid-display-body {
+  outline: none;
+  height: 365px !important;
+  overflow: auto !important;
+  border: none;
+
+  > div {
+      overflow: visible !important;
+  }
+
+  &::-webkit-scrollbar {
+      -webkit-appearance: none;
+      background-color: #eee;
+      width: 8px;
+      height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  }
+}
+
+.expand-row {
+  padding: 10px 20px;
+  border: 1px solid #e3eef1;
+  border-top: 0px;
+  background-color: rgb(229, 237, 240);
+  max-height: 225px !important;
+  height: auto;
+
+  &:hover {
+      background-color: unset;
+      background-color: rgb(229, 237, 240);
+  }
+}
+.grid-display-body-expand {
+  outline: none;
+  max-height: 153px !important;
+  overflow: auto !important;
+  border: 1px solid #e3eef1;
+  height: auto;
+
+  &::-webkit-scrollbar {
+      -webkit-appearance: none;
+      background-color: #eee;
+      width: 8px;
+      height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  }
+}

@@ -1,0 +1,79 @@
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.btn {
+  border-radius: 3px;
+  font-size: 13px;
+  height: 30px;
+  transition-duration: 0.2s;
+  padding: 0 8px;
+}
+
+.btn-default {
+  border-color: #dfe4e6;
+  background-color: #fff;
+  color: #333;
+}
+
+.dropdown-one-column .scrollbar {
+  overflow: auto;
+  max-height: 250px;
+}
+
+.dropdown-one-column .list-item-name > li:last-child {
+  border: 0 none;
+}
+
+.dropdown-one-column .list-item-name > li:hover {
+  background-color: #e4f9ff;
+}
+
+.dropdown-one-column .list-item-name > li {
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  padding: 10px;
+  line-height: 1;
+}
+
+.dropdown .btn-default.btn-full {
+  width: 100%;
+  text-align: left;
+  position: relative;
+  padding-right: 22px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown .btn-default.btn-full:after {
+  position: absolute;
+  right: 10px;
+  top: 18px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  background-color: #eee;
+  width: 8px;
+  height: 8px;
+}
+
+.not-macos ::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.not-macos ::-webkit-scrollbar {
+  -webkit-appearance: none;
+  background-color: #eee;
+  width: 8px;
+  height: 8px;
+}
