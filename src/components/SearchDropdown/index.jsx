@@ -10,6 +10,7 @@ import Loading from 'Src/components/Loading';
 // Utils
 import {handleError} from 'Src/handleError';
 import usePrevious from 'Src/hooks/usePrevious';
+import useDebounce from 'Src/hooks/useDebounce';
 import {getObjectPropSafely} from 'Src/utils';
 
 // Assets
@@ -59,6 +60,7 @@ const SearchDropdown = (props) => {
 
     const serviceConfigPrev = usePrevious(props.serviceConfig);
     const searchPrev = usePrevious(search);
+    const searchDebounce = useDebounce(search, 500);
 
     const {disableSearch, className} = props;
 
@@ -66,7 +68,7 @@ const SearchDropdown = (props) => {
 
     useEffect(() => {
         setIsLoading(true);
-        fetchData(search,page);
+        fetchData(search, page);
     }, []);
 
     useEffect(() => {
@@ -81,7 +83,7 @@ const SearchDropdown = (props) => {
             setPage(1);
             fetchData({
                 page: page,
-                search: search
+                search: searchDebounce
             });
         }
 
@@ -113,7 +115,7 @@ const SearchDropdown = (props) => {
                 });
             }
         }
-    }, [getObjectPropSafely(() => props.modeSearch), getObjectPropSafely(() => props.listDependence)]);
+    }, [getObjectPropSafely(() => props.listDependence)]);
 
     const fetchData = configs => {
         const {service, serviceConfig} = props;

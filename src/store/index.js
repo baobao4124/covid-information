@@ -1,7 +1,12 @@
+import {createContext} from 'react';
+
+import {initialState} from './state';
+import {types} from './actions';
+import reducer from './reducer';
 import 'regenerator-runtime/runtime';
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import {reducer as Home} from './../modules/Home/reducer';
+import {reducer as Home} from '../modules/Home/reducer';
 
 import rootSaga from './../middleware';
 
@@ -21,5 +26,17 @@ const composeEnhancers =  typeof window === 'object' && window['__REDUX_DEVTOOLS
 store = createStore(appReducer, composeEnhancers(applyMiddleware(sagaMiddleware)));
 
 sagaMiddleware.run(rootSaga);
+
+const StoreContext = createContext({
+    state: initialState,
+    dispatch: () => null
+});
+
+export {
+    StoreContext,
+    reducer as StoreReducer,
+    initialState as defaultState,
+    types
+};
 
 export default store;
