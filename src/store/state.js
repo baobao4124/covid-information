@@ -5,7 +5,8 @@ const initialState = {
         slug: 'vietnam'
     },
     isLoading: false,
-    countrySummary: {}
+    countrySummary: {},
+    rangeDate: {}
 };
 
 export {

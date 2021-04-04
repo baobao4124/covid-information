@@ -14,6 +14,11 @@ const reducer = (state = initialState, action) => {
                 return {...state, countrySummary: action.payload.countrySummary};
             }
             return state;
+        case types.UPDATE_RANGE_DATE:
+            if (action.payload && action.payload.rangeDate) {
+                return {...state, rangeDate: action.payload.rangeDate};
+            }
+            return state;
         case types.UPDATE_LOADING:
             if (action.payload) {
                 return {...state, isLoading: action.payload};

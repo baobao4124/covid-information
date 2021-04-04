@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import produce from 'immer';
-import {MessageBox} from '@antscorp/components';
+import {MessageBox, Calendar} from '@antscorp/components';
 
 // Components
 import SearchDropdown from 'Components/SearchDropdown';
@@ -10,7 +10,7 @@ import TableVirtualized from 'Layouts/AppMain/components/TableVirtualized';
 
 // Actions
 import {StoreContext, StoreReducer, defaultState} from 'Src/store';
-import {updateSelectedCountry} from 'Src/store/actions';
+import {updateSelectedCountry, updateRangeDate} from 'Src/store/actions';
 
 // Services
 import {countryServices, getDayOneByCountryServices} from 'Src/services/index';
@@ -71,10 +71,16 @@ const AppMain = () => {
 
     useEffect(() => {
         try {
-            if (!dataByCountry[state.countrySelected.slug]) {
+            const {fromDate = '', toDate = ''} = state.rangeDate;
+
+            if (getObjectPropSafely(() => !dataByCountry[state.countrySelected.slug]) || 
+                getObjectPropSafely(() => fromDate) || getObjectPropSafely(() => toDate)) {
                 setIsLoading(true);
+
                 getDayOneByCountryServices({
-                    country: state.countrySelected.slug
+                    country: state.countrySelected.slug,
+                    from: fromDate,
+                    to: toDate
                 }).then(response => {
                     const {data} = response;
             
@@ -85,7 +91,7 @@ const AppMain = () => {
                                 Confirmed: item.Confirmed,
                                 Recovered: item.Recovered,
                                 Deaths: item.Deaths,
-                                Date: formatDateTime(item.Date)
+                                Date: formatDateTime(item.Date, 'YEAR_MONTH_DAY')
                             };
                         });
         
@@ -113,10 +119,11 @@ const AppMain = () => {
                 args: {}
             });
         }
-    }, [state.countrySelected]);
+    }, [getObjectPropSafely(() => state.countrySelected), getObjectPropSafely(() => state.rangeDate)]);
 
     const checkOverHeap = (limit, newData) => {
-        if (getObjectPropSafely(() => Object.keys(dataByCountry).length > limit - 1)) {
+        if (getObjectPropSafely(() => Object.keys(dataByCountry).length > limit - 1) || 
+        getObjectPropSafely(() => dataByCountry[state.countrySelected.slug])) {
             setDataByCountry(
                 produce(dataByCountry, draftData => {
                     delete draftData[Object.keys(dataByCountry)[0]];
@@ -125,6 +132,16 @@ const AppMain = () => {
                 })
             );
         } else {
+            if (getObjectPropSafely(() => state.rangeDate.fromDate) ||
+            getObjectPropSafely(() => state.rangeDate.toDate)) {
+                updateRangeDate(dispatch, {
+                    rangeDate: {
+                        fromDate: '',
+                        toDate: ''
+                    }
+                });
+            }
+
             setDataByCountry({
                 ...dataByCountry,
                 [state.countrySelected.slug]: newData
@@ -137,6 +154,26 @@ const AppMain = () => {
             ...messageBox,
             isOpen: false
         });
+    };
+
+    const onApplyCalendar = (newProps) => {
+        try {
+            if (newProps.rangeDate) {
+                const pattern = 'TIME_ZONE';
+                const rangeDate = {
+                    fromDate: formatDateTime(newProps.rangeDate.fromDate, pattern),
+                    toDate: formatDateTime(newProps.rangeDate.toDate, pattern)
+                };
+
+                updateRangeDate(dispatch, {rangeDate});
+            }
+        } catch (error) {
+            handleError(error, {
+                component: PATH,
+                action: 'onApplyCalendar',
+                args: {newProps}
+            });
+        }
     };
 
     return (
@@ -169,6 +206,10 @@ const AppMain = () => {
                                 }}
                                 modeSearch='CLIENT'
                                 onClick={onClickSelectDropdown}
+                            />
+                            <Calendar
+                                showCompareSwitch={false}
+                                onApply={onApplyCalendar} 
                             />
                         </div>
                         <div className="app-main__table">

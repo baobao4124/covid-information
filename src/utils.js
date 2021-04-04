@@ -117,13 +117,92 @@ export const random = (number) => {
     }
 };
 
-export const formatDateTime = (value, locale = 'en') => {
-    let formatDefault = ['YYYYMMDD hh:mm:ss', 'YYYYMMDDhhmmss', 'YYYYMMDD'];
+export const formatDateTime = (value, pattern, locale = 'en') => {
+    let formatDefault = ['YYYYMMDD hh:mm:ss','YYYYMMDDhhmm', 'YYYYMMDDhhmmss', 'YYYYMMDD', 'DD/MM/YYYY'];
     let formattedValue = value;
 
     try {
-        if (typeof value !== 'undefined') {
-            formattedValue = moment(value, ['YYYY',...formatDefault], 'en').locale(locale).format('MMM DD, YYYY');
+        if (typeof pattern !== 'undefined') {
+            switch (pattern) {
+                case 'TIME_ZONE': {
+                    formattedValue = moment(value, ['YYYY-MM-DD[T]HH:mm:ss.SSS[Z]',...formatDefault], 'en').locale(locale).format('YYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
+                    break;
+                }
+                case 'YEAR': {
+                    formattedValue = moment(value, ['YYYY',...formatDefault], 'en').locale(locale).format('YYYY');
+                    break;
+                }
+                case 'YEAR_QUARTER': {
+                    formattedValue = moment(value, ['YYYYQ',...formatDefault], 'en').locale(locale).format('[Q]Q, YYYY');
+                    break;
+                }
+                case 'YEAR_MONTH': {
+                    formattedValue = moment(value, ['YYYYMM',...formatDefault], 'en').locale(locale).format('MMM YYYY');
+                    break;
+                }
+                case 'YEAR_WEEK': {
+                    let fromDate = moment(value, ['YYYYWW', 'YYYYMM', ...formatDefault], 'en').startOf('isoWeek').locale(locale).format('MMM DD, YYYY');
+                    let toDate = moment(value, ['YYYYWW', 'YYYYMM',...formatDefault], 'en').endOf('isoWeek').locale(locale).format('MMM DD, YYYY');
+                    let week = moment(value, ['YYYYWW', 'YYYYMM',...formatDefault], 'en').locale(locale).format('[Week] WW');
+
+                    formattedValue = `${fromDate} to ${toDate} (${week})`;
+                    break;
+                }
+                case 'DATE':
+                case 'YEAR_MONTH_DAY': {
+                    formattedValue = moment(value, [...formatDefault], 'en').locale(locale).format('MMM DD, YYYY');
+                    break;
+                }
+                case 'YEAR_MONTH_DAY_HOUR': {
+                    formattedValue = moment(value, ['YYYYMMDDHH',...formatDefault], 'en').locale(locale).format('MMM, DD, YYYY, hh A');
+                    break;
+                }
+                case 'YEAR_MONTH_DAY_MINUTE': {
+                    formattedValue = moment(value, ['YYYYMMDDHHmm',...formatDefault], 'en').locale(locale).format('MMM, DD, YYYY, hh:mm A');
+                    break;
+                }
+                case 'YEAR_MONTH_DAY_SECOND': {
+                    formattedValue = moment(value, ['YYYYMMDDHHmmss',...formatDefault], 'en').locale(locale).format('MMM, DD, YYYY, hh:mm:ss A');
+                    break;
+                }
+                case 'QUARTER': {
+                    formattedValue = moment(value, ['Q',...formatDefault], 'en').locale(locale).format('[Q]Q');
+                    break;
+                }
+                case 'MONTH': {
+                    formattedValue = moment(value, ['MM',...formatDefault], 'en').locale(locale).format('MMM');
+                    break;
+                }
+                case 'WEEK': {
+                    formattedValue = moment(value, ['WW', 'ww', ...formatDefault], 'en').locale(locale).format('[Week] WW');
+                    break;
+                }
+                case 'DAY_OF_WEEK': {
+                    formattedValue = moment(value, ['d',...formatDefault], 'en').locale(locale).format('dddd');
+                    break;
+                }
+                case 'MONTH_DAY': {
+                    formattedValue = moment(value, ['MMDD',...formatDefault], 'en').locale(locale).format('MMM DD');
+                    break;
+                }
+                case 'DAY_OF_MONTH':
+                case 'DAY': {
+                    // Add month for moment know 31 is 31, if not 31 -> 01
+                    formattedValue = moment(value + '01', ['DD',...formatDefault], 'en').locale(locale).format('DD');
+                    break;
+                }
+                case 'HOUR': {
+                    formattedValue = moment(value, ['HH',...formatDefault], 'en').locale(locale).format('hh A');
+                    break;
+                }
+                case 'MINUTE': {
+                    formattedValue = moment(value, ['mm',...formatDefault], 'en').locale(locale).format('mm');
+                    break;
+                }
+                default:
+                    formattedValue = value;
+                    break;
+            }
         }
     } catch (e) {
         return value;

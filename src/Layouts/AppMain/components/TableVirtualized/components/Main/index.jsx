@@ -4,7 +4,8 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 // Components
-import {AutoSizer, Column, Table} from 'react-virtualized';
+import {SortableContainer, SortableElement} from 'react-sortable-hoc';
+import {AutoSizer, Column, Table, defaultTableRowRenderer} from 'react-virtualized';
 
 // Utils
 import {getObjectPropSafely} from 'Src/utils';
@@ -29,6 +30,9 @@ const MainTable = (props) => {
         rowClassNameBody,
         translate
     } = props;
+
+    const SortableTable = SortableContainer(Table);
+    const SortableTableRowRenderer = SortableElement(defaultTableRowRenderer);
 
     const configHeaders = (headers, width) => {
         try {
@@ -90,7 +94,7 @@ const MainTable = (props) => {
     
                             return <div 
                                 key={header.dataKey} 
-                                className={headerClassName}
+                                className={classnames(headerClassName, 'ReactVirtualized__Table__sortableHeaderColumn')}
                                 style={{width: widthColumn}}
                             >
                                 {translate(cellData)}
@@ -107,6 +111,14 @@ const MainTable = (props) => {
                 });
             }
         }
+    };
+
+    const rowRenderer = (props) => {
+        return <SortableTableRowRenderer {...props} />;
+    };
+      
+    const CustomizedTable = (props) => {
+        return <SortableTable rowRenderer={rowRenderer} {...props} />;
     };
 
     const noRowsRenderer = () => {
@@ -139,7 +151,7 @@ const MainTable = (props) => {
             <AutoSizer disableHeight >
                 {({width}) => {
                     return (
-                        <Table
+                        <CustomizedTable
                             width={width}
                             height={height}
                             gridClassName={gridClassName}
@@ -151,9 +163,10 @@ const MainTable = (props) => {
                             rowCount={rows && rows.length || 0}
                             rowGetter={({index}) => getObjectPropSafely(() => rows[index])}
                             noRowsRenderer={noRowsRenderer}
+                            estimatedRowSize={10}
                         >
                             {configHeaders(headers, width)}
-                        </Table>
+                        </CustomizedTable>
                     );}}
             </AutoSizer>   
         </>

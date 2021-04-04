@@ -42,6 +42,7 @@ const TableVirtualized = (props) => {
         rowClassNameBody,
         translate
     } = props;
+    
     const onClickChangePage = (page) => {
         if (page && typeof props.changePage === 'function') {
             props.changePage(page);

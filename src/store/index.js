@@ -10,6 +10,8 @@ import {reducer as Home} from '../modules/Home/reducer';
 
 import rootSaga from './../middleware';
 
+// Redux
+
 const appReducer = combineReducers({
     Home
 });
@@ -27,7 +29,7 @@ store = createStore(appReducer, composeEnhancers(applyMiddleware(sagaMiddleware)
 
 sagaMiddleware.run(rootSaga);
 
-/// /
+// Context Api
 
 const StoreContext = createContext(initialState);
 
