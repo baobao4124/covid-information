@@ -2,9 +2,6 @@
   "coveragePathIgnorePatterns": [
     "/node_modules/"
   ],
-  "modulePathIgnorePatterns": [
-    "<rootDir>/cypress/"
-  ],
   "collectCoverage": false,
   "collectCoverageFrom": [
     "./**/*.{js,jsx}"
@@ -18,5 +15,5 @@
     "^Layout(.*)$": "<rootDir>/src/layout$1",
     "^Hooks(.*)$": "<rootDir>/src/hooks$1"
   },
-  "coverageDirectory": "./__tests__/coverage/"
+  "coverageDirectory": "./__test__/coverage/"
 }

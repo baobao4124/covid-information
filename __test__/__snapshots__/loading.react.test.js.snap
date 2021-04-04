@@ -6,7 +6,7 @@ exports[`renders correctly 1`] = `
   style={
     Object {
       "paddingTop": undefined,
-      "top": 0,
+      "top": 10,
       "zIndex": 1005,
     }
   }
