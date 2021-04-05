@@ -125,7 +125,7 @@ export const formatDateTime = (value, pattern, locale = 'en') => {
         if (typeof pattern !== 'undefined') {
             switch (pattern) {
                 case 'TIME_ZONE': {
-                    formattedValue = moment(value, ['YYYY-MM-DD[T]HH:mm:ss.SSS[Z]',...formatDefault], 'en').locale(locale).format('YYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
+                    formattedValue = moment(value, ['YYYY-MM-DD[T]HH:mm:ss[Z]',...formatDefault], 'en').locale(locale).format('YYYY-MM-DD[T]HH:mm:ss[Z]');
                     break;
                 }
                 case 'YEAR': {

@@ -6,6 +6,7 @@ import {MessageBox, Calendar} from '@antscorp/components';
 import SearchDropdown from 'Components/SearchDropdown';
 import Loading from 'Components/Loading';
 import Summary from 'Layouts/AppMain/components/Summary';
+import SummaryCountry from 'Layouts/AppMain/components/SummaryContry';
 import TableVirtualized from 'Layouts/AppMain/components/TableVirtualized';
 
 // Actions
@@ -25,7 +26,6 @@ const PATH = 'Layouts/AppMain';
 const headerStyle = {justifyContent: 'flex-start'};
 const bodyStyle = {backgroundColor: '#f8f9fa'};
 const loadingStyle = {
-    backgroundColor: 'rgba(0,0,0,0.4)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
@@ -186,7 +186,6 @@ const AppMain = () => {
             >
                 {messageBox.content}
             </MessageBox>
-            {isLoading && <Loading loading={loadingStyle} loadingIcon={loadingIconStyle} />}
             <div className="app-main">
                 <div className="app-main__outer">
                     <div className="app-main__inner">
@@ -209,61 +208,17 @@ const AppMain = () => {
                             />
                             <Calendar
                                 showCompareSwitch={false}
-                                onApply={onApplyCalendar} 
+                                onApply={onApplyCalendar}
                             />
                         </div>
                         <div className="app-main__table">
+                            {isLoading && <Loading loading={loadingStyle} loadingIcon={loadingIconStyle} />}
                             <TableVirtualized 
                                 rows={dataByCountry[state.countrySelected.slug]}
                                 isShowFooter={false}
                             />
                         </div>
-                        <div className="app-main__footer">
-                            <div className="row">
-                                <div className="col-md-6 col-xl-4">
-                                    <div className="card mb-3 widget-content">
-                                        <div className="widget-content-outer">
-                                            <div className="widget-content-wrapper">
-                                                <div className="widget-content-left">
-                                                    <div className="widget-heading">Confirmed</div>
-                                                </div>
-                                                <div className="widget-content-right">
-                                                    <div className="widget-numbers text-warning">{getObjectPropSafely(() => state.countrySummary.totalConfirmed || 0)}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-6 col-xl-4">
-                                    <div className="card mb-3 widget-content">
-                                        <div className="widget-content-outer">
-                                            <div className="widget-content-wrapper">
-                                                <div className="widget-content-left">
-                                                    <div className="widget-heading">Deaths</div>
-                                                </div>
-                                                <div className="widget-content-right">
-                                                    <div className="widget-numbers text-danger">{getObjectPropSafely(() => state.countrySummary.totalDeaths || 0)}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-6 col-xl-4">
-                                    <div className="card mb-3 widget-content">
-                                        <div className="widget-content-outer">
-                                            <div className="widget-content-wrapper">
-                                                <div className="widget-content-left">
-                                                    <div className="widget-heading">Recovered</div>
-                                                </div>
-                                                <div className="widget-content-right">
-                                                    <div className="widget-numbers text-success">{getObjectPropSafely(() => state.countrySummary.totalRecovered || 0)}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <SummaryCountry />
                     </div>
                 </div>
             </div>
